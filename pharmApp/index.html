@@ -1,0 +1,47 @@
+<html ng-app="pharmApp">
+  <script src="./js/angular.min.js"></script>
+    <script src="./js/app.js"></script>
+      <body>
+    
+ <style type="text/css">
+      table,th,td{
+                  border:1px solid blue;
+                  border-collapse:collapse;
+              }
+    </style>
+<div ng-controller="PharmaCtrl">
+
+<form ng-submit="addmedic({nom:nom, prix:prix})" novalidate  name="addForm">
+      
+Nom du medicament: <input name="nom" ng-model = "nom" required autofocus> 
+<span ng-show="addForm.nom.$touched && addForm.nom.$error.required">le nom du medicament est requis</span><br>
+
+
+prix du medicament: <input type="number" name="prix"ng-model="prix" min="500.1" required>
+ <span ng-show="addForm.prix.$touched && addForm.prix.$error.required">le prix du medicament est requis</span>
+ <span ng-show="addForm.prix.$touched && addForm.noprix.$error.min">le prix du medicament doit dépasser 500</span><br>
+
+<input type="submit" value="Ajouter le medicament"ng-disabled="addForm.$invalid">  
+</form>
+     {{12345678 | prixEnCfa}}
+
+        <table>
+        	<caption>Liste des medicaments les plus chers</caption>
+			<tr>
+				<th>NOM</th>
+				<th>prix</th>
+			</tr>
+
+			<tr ng-repeat="medicament in medicaments | orderBy:'-prix' | limitTo:3 ">
+				
+				<td>{{medicament.nom | uppercase}}</td>
+				<td>{{medicament.prix | prixEnCfa}}</td>
+			</tr>
+        </table>
+
+        <p ng-init="medicament5 = {nom:'Efferalgant', prix:1800}">
+          <button ng-click="addmedic(medicament5)" ng-hide="added">Ajouter</button>
+        </p>
+    </div>
+  </body>
+</html>
